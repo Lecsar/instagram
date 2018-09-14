@@ -1,0 +1,71 @@
+{
+  "name": "spa",
+  "version": "0.1.0",
+  "private": true,
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "./src/containers",
+      "./src/routing",
+      "./src/store",
+      "./src/middlewares",
+      "./src/functions",
+      "./src/index.js",
+      "./src/reducers/index.js",
+      "./src/components/enter/signUp/block/form/inputs/checks.js",
+      "./src/components/userPage/posts-field/posts/modal/post-block/comments/modal-blocks/comments-block-parts/text/textDecorate.js"
+    ]
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-fileupload": "^0.4.0",
+    "history": "^4.7.2",
+    "mongodb": "^3.1.4",
+    "mongoose": "^5.2.12",
+    "path": "^0.12.7",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-app-rewire-less": "^2.1.2",
+    "react-dom": "^16.4.1",
+    "react-pure-stateless-component": "^0.3.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "request": "^2.88.0",
+    "styled-components": "^3.4.2"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test ",
+    "test-dom": "react-app-rewired test --env=jsdom",
+    "coverage": "react-app-rewired test --coverage --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^3.1.0",
+    "expect": "^23.4.0",
+    "jest": "^23.4.1",
+    "jsdom": "11.11.0",
+    "jsdom-global": "3.0.2",
+    "prettier": "1.14.2",
+    "promise-mock": "^2.1.0",
+    "react-app-rewired": "^1.5.2",
+    "react-test-renderer": "^16.4.1",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^6.1.3"
+  }
+}

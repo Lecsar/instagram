@@ -1,0 +1,15 @@
+{
+  "extends": ["airbnb", "prettier/react", "prettier/standard"],
+  "rules": {
+    "linebreak-style": 0,
+    "indent": 0,
+    "comma-dangle": 0,
+    "no-trailing-spaces": 0,
+    "react/prop-types": 0
+  },
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

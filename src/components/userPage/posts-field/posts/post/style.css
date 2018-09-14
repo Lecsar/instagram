@@ -1,0 +1,7 @@
+.post:hover ~ .post-stub {
+  display: flex;
+}
+
+.post-stub:hover {
+  display: flex;
+}

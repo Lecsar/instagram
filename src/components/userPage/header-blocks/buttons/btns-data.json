@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Log In",
+    "link": "/",
+    "active": true
+  },
+  {
+    "name": "Sign Up",
+    "link": "/signup",
+    "active": false
+  }
+]
