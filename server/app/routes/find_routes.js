@@ -51,4 +51,21 @@ module.exports = (app, users) => {
       }
     );
   });
+
+  app.post('/getNews', ({ body: { profileName } }, res) => {
+    users.findOne({ profileName }, { following: 1 }, (error, { following }) => {
+      if (error) {
+        return sendError(res, error);
+      }
+
+      following
+        .reduce(
+          (accumPosts, profileName) => users
+              .findOne({ profileName }, { posts: 1 })
+              .then(({ posts }) => accumPosts.concat(posts)),
+          []
+        )
+        .then(posts => sendSuccessResult(res, posts));
+    });
+  });
 };

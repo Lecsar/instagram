@@ -23,21 +23,26 @@ const NewsContainer = styled.section`
 
 class News extends React.Component {
   componentDidMount() {
-    console.log('Запрос на сервер');
+    this.props.newsActions.getNewsRequest('naishuller');
   }
 
   render() {
     const {
+      // props
       isLogin,
       userReducer: {
         user,
         currentPage: { searchField }
       },
+      newsReducer: { news },
+      // actions
       userActions: { onChangeSearchInput, onResetSearchInput },
       loginActions: { onLogOut }
     } = this.props;
 
     const profilePhoto = user && user.profilePhoto;
+
+    console.log(news);
 
     const header = (
       <Header
@@ -57,7 +62,9 @@ class News extends React.Component {
         {header}
 
         <NewsContainer>
-          <Post />
+          {news.map(({ _id, ...itemData }) => (
+            <Post key={_id} {...itemData} />
+          ))}
         </NewsContainer>
       </MainBlock>
     );
