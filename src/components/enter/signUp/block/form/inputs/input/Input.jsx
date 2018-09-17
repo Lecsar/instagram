@@ -36,7 +36,6 @@ const Input = ({
 export default Input;
 
 Input.propTypes = {
-  data: PropTypes.obj,
   isError: PropTypes.bool,
   value: PropTypes.string,
   isDefaultView: PropTypes.bool,
