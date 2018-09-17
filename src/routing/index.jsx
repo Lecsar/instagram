@@ -7,6 +7,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import User from '../containers/userPage/User';
 import SignUp from '../containers/sign-up/Sign-up';
 import Login from '../containers/log-in/Log-in';
+import News from '../containers/news/News';
 
 // import requireAuthentication from '../containers/authenticated/index';
 
@@ -22,6 +23,7 @@ export const Router = () => (
         // component={requireAuthentication(User)}
         component={User}
       />
+      <Route path="/news" component={News} />
     </div>
   </ConnectedRouter>
 );

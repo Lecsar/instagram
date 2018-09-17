@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { FLEX_ROW, BORDER_COLOR, BTN_COLOR_HEADER } from '../../../const';
 
@@ -42,12 +43,13 @@ const DropDownMenu = styled.ul`
   border-radius: 0 0 5px 5px;
   border: 1px solid ${BORDER_COLOR};
   border-top: 0;
+  width: 18rem;
 `;
 
 const MenuElement = styled.li`
   padding: 0.5rem 2rem;
   list-style-type: none;
-  font-size: 2.3rem;
+  font-size: 2rem;
   background-color: white;
 
   &:hover {
@@ -70,7 +72,10 @@ const LogOut = ({ profilePhoto, onLogOut }) => (
     <ChevonDown className="show-dropdown-menu" />
     {/* <StyledBtn onClick={onLogOut} /> */}
     <DropDownMenu className="dropdown-menu">
-      <MenuElement>Новости</MenuElement>
+      <MenuElement>Мой профиль</MenuElement>
+      <MenuElement>
+        <Link to="../news">Новости</Link>
+      </MenuElement>
       <MenuElement onClick={onLogOut}>Выйти</MenuElement>
     </DropDownMenu>
   </StyledDiv>

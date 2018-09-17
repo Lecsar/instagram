@@ -7,6 +7,7 @@ import login from './log-in';
 import answer from './answer';
 import addPostReducer from './addPost';
 import deleteReducer from './delete';
+import newsReducer from './news';
 
 export default combineReducers({
   userReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   answer,
   addPostReducer,
   deleteReducer,
+  newsReducer,
   router: routerReducer
 });
