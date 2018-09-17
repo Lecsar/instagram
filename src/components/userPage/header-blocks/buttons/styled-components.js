@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FLEX_ROW, BTN_COLOR_HEADER } from '../../../../const';
+import { FLEX_ROW, BTN_COLOR_HEADER, FLEX_ROW_CENTER } from '../../../../const';
 
 export const StyledLink = styled(Link)`
   ${FLEX_ROW};
@@ -17,6 +17,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledDiv = styled.div`
-  ${FLEX_ROW};
+  ${FLEX_ROW_CENTER};
   justify-content: space-between;
+  height: 100%;
 `;

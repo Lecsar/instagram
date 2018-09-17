@@ -24,6 +24,7 @@ const StyledDiv = styled.div`
 
 const Header = ({
   // props
+  profilePhoto,
   searchField,
   isLogin,
   // actions
@@ -41,7 +42,11 @@ const Header = ({
         onChangeSearchInput={onChangeSearchInput}
         onResetSearchInput={onResetSearchInput}
       />
-      <Buttons isLogin={isLogin} onLogOut={onLogOut} />
+      <Buttons
+        isLogin={isLogin}
+        onLogOut={onLogOut}
+        profilePhoto={profilePhoto}
+      />
     </StyledDiv>
   </StyledHeader>
 );

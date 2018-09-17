@@ -1,0 +1,7 @@
+.show-dropdown-menu:hover ~ .dropdown-menu {
+  display: flex;
+}
+
+.dropdown-menu:hover {
+  display: flex;
+}

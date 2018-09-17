@@ -98,11 +98,14 @@ class User extends React.Component {
       deleteActions
     } = this.props;
 
+    const profilePhoto = user && user.profilePhoto;
+
     const header = (
       <Header
         // props
         searchField={searchField}
         isLogin={isLogin}
+        profilePhoto={profilePhoto}
         // actions
         onChangeSearchInput={onChangeSearchInput}
         onLogOut={onLogOut}
