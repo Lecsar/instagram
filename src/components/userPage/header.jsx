@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 import Logo from './header-blocks/logo';
 import Search from './header-blocks/search/search';
-import Buttons from './header-blocks/buttons/buttons';
+import LoginButtons from './header-blocks/login-buttons/login-buttons';
+import DropDown from './drop-down-menu/DropDownMenu';
+import MenuAuthorizedUser from './header-blocks/menu-authorized-user';
 
 import { FLEX_ROW, BORDER_COLOR, FLEX_ROW_CENTER } from '../../const';
 
@@ -21,7 +23,6 @@ const StyledDiv = styled.div`
   justify-content: space-between;
   width: 100rem;
 `;
-
 const Header = ({
   // props
   profilePhoto,
@@ -32,23 +33,26 @@ const Header = ({
   onChangeSearchInput,
   onResetSearchInput
 }) => (
-  <StyledHeader>
-    <StyledDiv>
-      <Logo />
-      <Search
-        // props
-        searchField={searchField}
-        // actions
-        onChangeSearchInput={onChangeSearchInput}
-        onResetSearchInput={onResetSearchInput}
-      />
-      <Buttons
-        isLogin={isLogin}
-        onLogOut={onLogOut}
-        profilePhoto={profilePhoto}
-      />
-    </StyledDiv>
-  </StyledHeader>
-);
+    <StyledHeader>
+      <StyledDiv>
+        <Logo />
+        <Search
+          // props
+          searchField={searchField}
+          // actions
+          onChangeSearchInput={onChangeSearchInput}
+          onResetSearchInput={onResetSearchInput}
+        />
+
+        {isLogin ? (
+          <MenuAuthorizedUser profilePhoto={profilePhoto} onLogOut={onLogOut} />
+        ) : (
+          <LoginButtons />
+        )}
+
+        {isLogin && <DropDown onLogOut={onLogOut} />}
+      </StyledDiv>
+    </StyledHeader>
+  );
 
 export default Header;
