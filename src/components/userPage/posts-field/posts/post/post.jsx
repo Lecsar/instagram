@@ -43,7 +43,7 @@ const Post = ({
         </DeleteIcon>
         <StyledSpan>
           <StyledIcon>❤</StyledIcon>
-          {likes}
+          {likes.length}
         </StyledSpan>
         <StyledSpan>
           <StyledDialogIcon />

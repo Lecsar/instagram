@@ -40,10 +40,10 @@ class User extends React.Component {
     }
 
     // убрать
-    // this.props.loginActions.onClickLoginRequest({
-    //   email: '2',
-    //   password: '0'
-    // });
+    this.props.loginActions.onClickLoginRequest({
+      email: '2',
+      password: '0'
+    });
   }
 
   // при обновлении компонента (переход по ссылкам и т.д)

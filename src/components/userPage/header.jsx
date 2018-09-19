@@ -22,6 +22,7 @@ const StyledDiv = styled.div`
   ${FLEX_ROW_CENTER};
   justify-content: space-between;
   width: 100rem;
+  position: relative;
 `;
 const Header = ({
   // props

@@ -139,7 +139,7 @@ const Post = ({
       <PostMediaIconLike />
       <PostMediaIconComment />
     </PostMedia>
-    <PostBlockLikes>{likes} likes</PostBlockLikes>
+    <PostBlockLikes>{likes.length} likes</PostBlockLikes>
     <PostBlockCommentsField>
       {comments.map(({
  _id: id, profileName, text, parents = [] 

@@ -141,8 +141,8 @@ module.exports = (app, users) => {
   );
 
   // app.get('/test', (req, res) => {
-  //   users.find().then((users) => {
-  //     users.forEach((user) => {
+  //   users.find().then((findedUsers) => {
+  //     findedUsers.forEach((user) => {
   //       user.posts.forEach(post => (post.likes = []));
 
   //       users.updateOne(

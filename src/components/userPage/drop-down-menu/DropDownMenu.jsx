@@ -13,7 +13,7 @@ const DropDownMenu = styled.ul`
   margin: 0;
   position: absolute;
   top: 7.7rem;
-  right: 10%;
+  right: -1.2rem;
   border-radius: 0 0 5px 5px;
   border: 1px solid ${BORDER_COLOR};
   border-top: 0;
