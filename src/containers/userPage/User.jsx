@@ -40,10 +40,10 @@ class User extends React.Component {
     }
 
     // убрать
-    this.props.loginActions.onClickLoginRequest({
-      email: '2',
-      password: '0'
-    });
+    // this.props.loginActions.onClickLoginRequest({
+    //   email: '2',
+    //   password: '0'
+    // });
   }
 
   // при обновлении компонента (переход по ссылкам и т.д)
@@ -65,8 +65,12 @@ class User extends React.Component {
     const {
       // props
       pageInfo: {
- isLogin, currentProfileName, isMyPage, answer 
-},
+        isLogin,
+        currentProfileName,
+        isMyPage,
+        answer,
+        profilePhotoOfAuhorizedUser
+      },
       userReducer: {
         user,
         currentPage: { openPostId, searchField, commentFieldValue },
@@ -98,14 +102,12 @@ class User extends React.Component {
       deleteActions
     } = this.props;
 
-    const profilePhoto = user && user.profilePhoto;
-
     const header = (
       <Header
         // props
         searchField={searchField}
         isLogin={isLogin}
-        profilePhoto={profilePhoto}
+        profilePhoto={profilePhotoOfAuhorizedUser}
         // actions
         onChangeSearchInput={onChangeSearchInput}
         onLogOut={onLogOut}
@@ -175,7 +177,7 @@ const mapStateToProps = (
     userReducer,
     answer,
     addPostReducer,
-    login: { user: isLogin },
+    login: { user: isLogin, profilePhotoOfAuhorizedUser },
     deleteReducer
   },
   {
@@ -188,7 +190,8 @@ const mapStateToProps = (
     isLogin,
     currentProfileName,
     isMyPage: isLogin === currentProfileName,
-    answer
+    answer,
+    profilePhotoOfAuhorizedUser
   },
   userReducer,
   addPostReducer,

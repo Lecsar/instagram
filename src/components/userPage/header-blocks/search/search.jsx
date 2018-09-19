@@ -25,7 +25,7 @@ const Search = ({
  profilePhoto, profileName, _id, description: { name } 
 }) => (
           <StyledLi key={_id} onClick={onResetSearchInput}>
-            <StyledLink to={`${profileName}`}>
+            <StyledLink to={`/profile/${profileName}`}>
               <StyledImg src={profilePhoto} alt={name} />
               <StyledDiv>
                 <StyledH3>{profileName}</StyledH3>

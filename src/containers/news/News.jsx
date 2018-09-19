@@ -23,33 +23,34 @@ const NewsContainer = styled.section`
 
 class News extends React.Component {
   componentDidMount() {
-    this.props.newsActions.getNewsRequest('naishuller');
+    // const { profileNameOfAuthorizedUser } = this.props;
+
+    // if (profileNameOfAuthorizedUser) {
+    this.props.newsActions.getNewsRequest('yurydud');
+    // }
   }
 
   render() {
     const {
       // props
-      isLogin,
+      profileNameOfAuthorizedUser,
       userReducer: {
-        user,
+        // user,
         currentPage: { searchField }
       },
       newsReducer: { news },
+      profilePhotoOfAuhorizedUser,
       // actions
       userActions: { onChangeSearchInput, onResetSearchInput },
       loginActions: { onLogOut }
     } = this.props;
 
-    const profilePhoto = user && user.profilePhoto;
-
-    console.log(news);
-
     const header = (
       <Header
         // props
         searchField={searchField}
-        isLogin={isLogin}
-        profilePhoto={profilePhoto}
+        isLogin={profileNameOfAuthorizedUser}
+        profilePhoto={profilePhotoOfAuhorizedUser}
         // actions
         onChangeSearchInput={onChangeSearchInput}
         onLogOut={onLogOut}
@@ -57,24 +58,43 @@ class News extends React.Component {
       />
     );
 
+    console.log(news);
+
     return (
       <MainBlock>
         {header}
 
         <NewsContainer>
-          {news.map(({ _id, ...itemData }) => (
-            <Post key={_id} {...itemData} />
-          ))}
+          {news.map(
+            // eslint-disable-next-line no-shadow
+            ({ post: { _id: id, ...postInfo }, profilePhoto, profileName }) => {
+              console.log(postInfo);
+
+              return (
+                <Post
+                  key={id}
+                  {...postInfo}
+                  profileName={profileName}
+                  profilePhoto={profilePhoto}
+                />
+              );
+            }
+          )}
         </NewsContainer>
       </MainBlock>
     );
   }
 }
 
-const mapStateToProps = ({ newsReducer, login: { isLogin }, userReducer }) => ({
-  isLogin,
+const mapStateToProps = ({
+  newsReducer,
+  login: { user: profileNameOfAuthorizedUser, profilePhotoOfAuhorizedUser },
+  userReducer
+}) => ({
+  profileNameOfAuthorizedUser,
   userReducer,
-  newsReducer
+  newsReducer,
+  profilePhotoOfAuhorizedUser
 });
 
 const mapDispatchToProps = dispatch => ({

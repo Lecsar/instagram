@@ -12,7 +12,8 @@ const initialState = {
   defaultView: true,
   showErrorMessage: false,
   loginRequest: false,
-  user: ''
+  user: '',
+  profilePhotoOfAuhorizedUser: ''
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -26,7 +27,11 @@ const loginReducer = (state = initialState, action) => {
     case LOGIN_REQUEST:
       return { ...state, loginRequest: true };
     case LOGIN_SUCCESS:
-      return { ...initialState, user: action.payload.profileName };
+      return {
+        ...initialState,
+        user: action.payload.profileName,
+        profilePhotoOfAuhorizedUser: action.payload.profilePhoto
+      };
     case LOGIN_FAIL:
       return { ...state, showErrorMessage: true, loginRequest: false };
     case ON_LOG_OUT:

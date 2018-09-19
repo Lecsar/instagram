@@ -7,7 +7,7 @@ const usersSchema = new mongoose.Schema({
   posts: [
     {
       id: Number,
-      likes: Number,
+      likes: [],
       img: String,
       place: String,
       comments: [

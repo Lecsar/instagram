@@ -1,5 +1,7 @@
 const { sendError, sendSuccessResult, sendNotFound } = require('../../const');
 
+/* eslint-disable no-shadow,consistent-return */
+
 const answerOnRequestWithObjData = (res, error, dataForResponse, delay) => {
   setTimeout(() => {
     if (error) {
@@ -61,8 +63,15 @@ module.exports = (app, users) => {
       following
         .reduce(
           (accumPosts, profileName) => users
-              .findOne({ profileName }, { posts: 1 })
-              .then(({ posts }) => accumPosts.concat(posts)),
+              .findOne(
+                { profileName },
+                { posts: 1, profilePhoto: 1, profileName: 1 }
+              )
+              .then(({ posts, profilePhoto, profileName }) => {
+                posts.forEach(post => accumPosts.push({ profileName, post, profilePhoto }));
+
+                return accumPosts;
+              }),
           []
         )
         .then(posts => sendSuccessResult(res, posts));

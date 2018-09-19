@@ -139,4 +139,19 @@ module.exports = (app, users) => {
       });
     }
   );
+
+  // app.get('/test', (req, res) => {
+  //   users.find().then((users) => {
+  //     users.forEach((user) => {
+  //       user.posts.forEach(post => (post.likes = []));
+
+  //       users.updateOne(
+  //         { profileName: user.profileName },
+  //         { $set: { posts: user.posts } }
+  //       );
+  //     });
+  //   });
+
+  //   res.sendStatus(200);
+  // });
 };

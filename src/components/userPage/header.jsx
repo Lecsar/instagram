@@ -33,26 +33,26 @@ const Header = ({
   onChangeSearchInput,
   onResetSearchInput
 }) => (
-    <StyledHeader>
-      <StyledDiv>
-        <Logo />
-        <Search
-          // props
-          searchField={searchField}
-          // actions
-          onChangeSearchInput={onChangeSearchInput}
-          onResetSearchInput={onResetSearchInput}
-        />
+  <StyledHeader>
+    <StyledDiv>
+      <Logo />
+      <Search
+        // props
+        searchField={searchField}
+        // actions
+        onChangeSearchInput={onChangeSearchInput}
+        onResetSearchInput={onResetSearchInput}
+      />
 
-        {isLogin ? (
-          <MenuAuthorizedUser profilePhoto={profilePhoto} onLogOut={onLogOut} />
-        ) : (
-          <LoginButtons />
-        )}
+      {isLogin ? (
+        <MenuAuthorizedUser profilePhoto={profilePhoto} onLogOut={onLogOut} />
+      ) : (
+        <LoginButtons />
+      )}
 
-        {isLogin && <DropDown onLogOut={onLogOut} />}
-      </StyledDiv>
-    </StyledHeader>
-  );
+      {isLogin && <DropDown isLogin={isLogin} onLogOut={onLogOut} />}
+    </StyledDiv>
+  </StyledHeader>
+);
 
 export default Header;

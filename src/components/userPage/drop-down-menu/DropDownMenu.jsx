@@ -58,10 +58,12 @@ const MenuLink = styled(Link)`
   }
 `;
 
-const DropDown = ({ onLogOut }) => (
+const DropDown = ({ isLogin: profileNameOfAuthorizedUser, onLogOut }) => (
   <DropDownMenu className="dropdown-menu">
     <MenuElement>
-      <MenuLink to="/profile/naishuller">Мой профиль</MenuLink>
+      <MenuLink to={`/profile/${profileNameOfAuthorizedUser}`}>
+        Мой профиль
+      </MenuLink>
     </MenuElement>
     <MenuElement>
       <MenuLink to="../news">Новости</MenuLink>
