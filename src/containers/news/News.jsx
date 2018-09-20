@@ -10,7 +10,7 @@ import * as userActions from '../../actions/userActions';
 import { FLEX_COLUMN, FLEX_COLUMN_CENTER } from '../../const';
 
 import Header from '../../components/userPage/header';
-import Post from '../../components/news/post';
+import Post from '../../components/news/post/post';
 
 const MainBlock = styled.main`
   ${FLEX_COLUMN_CENTER};
@@ -26,7 +26,7 @@ class News extends React.Component {
     // const { profileNameOfAuthorizedUser } = this.props;
 
     // if (profileNameOfAuthorizedUser) {
-    this.props.newsActions.getNewsRequest('yurydud');
+    this.props.newsActions.getNewsRequest('naishuller');
     // }
   }
 
@@ -38,11 +38,12 @@ class News extends React.Component {
         // user,
         currentPage: { searchField }
       },
-      newsReducer: { news },
+      newsReducer: { news, idOpenCommentField, isRequestAddComment },
       profilePhotoOfAuhorizedUser,
       // actions
       userActions: { onChangeSearchInput, onResetSearchInput },
-      loginActions: { onLogOut }
+      loginActions: { onLogOut },
+      newsActions: { toogleCommentInput, newsAddCommentRequest }
     } = this.props;
 
     const header = (
@@ -58,29 +59,36 @@ class News extends React.Component {
       />
     );
 
-    console.log(news);
+    const newsBlocks = news.map(
+      ({ post: { id, ...postInfo }, profilePhoto, profileName }) => {
+        const shouldShowCommentInput = idOpenCommentField === id;
+
+        return (
+          <Post
+            // props
+            key={id}
+            id={id}
+            profileNameOfAuthorizedUser={profileNameOfAuthorizedUser}
+            {...postInfo}
+            profileName={profileName}
+            profilePhoto={profilePhoto}
+            shouldShowCommentInput={shouldShowCommentInput}
+            isRequestAddComment={isRequestAddComment}
+            // actions
+            toogleCommentInput={() => {
+              toogleCommentInput(!(idOpenCommentField === id) && id);
+            }}
+            newsAddCommentRequest={newsAddCommentRequest}
+          />
+        );
+      }
+    );
 
     return (
       <MainBlock>
         {header}
 
-        <NewsContainer>
-          {news.map(
-            // eslint-disable-next-line no-shadow
-            ({ post: { _id: id, ...postInfo }, profilePhoto, profileName }) => {
-              console.log(postInfo);
-
-              return (
-                <Post
-                  key={id}
-                  {...postInfo}
-                  profileName={profileName}
-                  profilePhoto={profilePhoto}
-                />
-              );
-            }
-          )}
-        </NewsContainer>
+        <NewsContainer>{newsBlocks}</NewsContainer>
       </MainBlock>
     );
   }

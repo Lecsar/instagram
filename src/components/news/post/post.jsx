@@ -7,9 +7,11 @@ import {
   RESET,
   BORDER_COLOR,
   FLEX_ROW_CENTER,
-  FLEX_ROW,
-  IMG_STUB_LINK
-} from '../../const';
+  IMG_STUB_LINK,
+  SpinnerStyle
+} from '../../../const';
+import Comments from '../comments/comments';
+import CommentInput from '../comment-input/commentInput';
 
 const PostBlock = styled.div`
   ${FLEX_COLUMN};
@@ -86,41 +88,36 @@ const PostBlockLikes = styled.div`
   margin-bottom: 1rem;
 `;
 
-const PostBlockCommentsField = styled.section`
-  padding: 0 1.5rem;
+const FieldForInput = styled.div`
   width: 100%;
+  position: relative;
+  padding: 0 1.5rem;
   box-sizing: border-box;
 `;
 
-const CommentBlock = styled.div`
-  ${FLEX_ROW};
-  width: 100%;
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-`;
-
-const CommentProfileName = styled(Link)`
-  text-decoration: none;
-  color: black;
-  font-weight: 700;
-  margin-right: 0.6rem;
-`;
-
-const CommentText = styled.p`
-  ${RESET};
-  width: 100%;
-  text-align: justify;
+const SpinnerForAddComment = styled(SpinnerStyle)`
+  font-size: 0.2rem;
+  left: 95%;
+  top: 50%;
 `;
 
 /* eslint-disable no-shadow */
 
 const Post = ({
+  // props
+  id,
   profileName,
   profilePhoto,
   likes,
   place,
   img = IMG_STUB_LINK,
-  comments
+  comments,
+  shouldShowCommentInput,
+  profileNameOfAuthorizedUser,
+  isRequestAddComment,
+  // actions
+  toogleCommentInput,
+  newsAddCommentRequest
 }) => (
   <PostBlock>
     <PostBlockTop>
@@ -137,23 +134,24 @@ const Post = ({
     <PostBlockImage src={img} alt="postImage" />
     <PostMedia>
       <PostMediaIconLike />
-      <PostMediaIconComment />
+      <PostMediaIconComment onClick={toogleCommentInput} />
     </PostMedia>
     <PostBlockLikes>{likes.length} likes</PostBlockLikes>
-    <PostBlockCommentsField>
-      {comments.map(({
- _id: id, profileName, text, parents = [] 
-}) => (
-        <CommentBlock key={id} style={{ marginLeft: `${parents.length}rem` }}>
-          <CommentText>
-            <CommentProfileName to={`/profile/${profileName}`}>
-              {profileName}
-            </CommentProfileName>
-            {text}
-          </CommentText>
-        </CommentBlock>
-      ))}
-    </PostBlockCommentsField>
+    <Comments comments={comments} />
+
+    {shouldShowCommentInput && (
+      <FieldForInput>
+        <CommentInput
+          postId={id}
+          profileName={profileName}
+          isLogin={profileNameOfAuthorizedUser}
+          // actions
+          closeInput={toogleCommentInput}
+          newsAddCommentRequest={newsAddCommentRequest}
+        />
+        {isRequestAddComment && <SpinnerForAddComment />}
+      </FieldForInput>
+    )}
   </PostBlock>
 );
 

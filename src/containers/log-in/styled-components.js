@@ -2,16 +2,18 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import {
-    FLEX_COLUMN_CENTER,
-    FLEX_ROW_CENTER,
-    BORDER_COLOR,
-    FLEX_ROW,
-    BTN_COLOR_HEADER
+  FLEX_COLUMN_CENTER,
+  FLEX_ROW_CENTER,
+  BORDER_COLOR,
+  FLEX_ROW,
+  BTN_COLOR_HEADER
 } from '../../const';
 
 export const StyledMain = styled.main`
   ${FLEX_COLUMN_CENTER};
-  margin-top: 20rem;
+  position: absolute;
+  top: calc(50% - 27rem);
+  left: calc(50% - (93.5rem / 2));
 `;
 
 export const StyledDiv = styled.div`
