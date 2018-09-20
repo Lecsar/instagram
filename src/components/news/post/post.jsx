@@ -77,6 +77,10 @@ const PostMediaIconLike = styled(PostMediaIcon)`
   background-image: url('https://png.icons8.com/metro/1600/like.png');
 `;
 
+const PostMediaIconRedLike = styled(PostMediaIcon)`
+  background-image: url(https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png);
+`;
+
 const PostMediaIconComment = styled(PostMediaIcon)`
   background-image: url('https://cdn4.iconfinder.com/data/icons/vectory-basic/40/comment_2-512.png');
 `;
@@ -108,16 +112,18 @@ const Post = ({
   id,
   profileName,
   profilePhoto,
-  likes,
+  amountLikes,
   place,
   img = IMG_STUB_LINK,
   comments,
   shouldShowCommentInput,
   profileNameOfAuthorizedUser,
+  isAuthorizedUserLikeThisPost,
   isRequestAddComment,
   // actions
   toogleCommentInput,
-  newsAddCommentRequest
+  newsAddCommentRequest,
+  toogleLike
 }) => (
   <PostBlock>
     <PostBlockTop>
@@ -133,10 +139,14 @@ const Post = ({
     </PostBlockTop>
     <PostBlockImage src={img} alt="postImage" />
     <PostMedia>
-      <PostMediaIconLike />
+      {isAuthorizedUserLikeThisPost ? (
+        <PostMediaIconRedLike onClick={toogleLike} />
+      ) : (
+        <PostMediaIconLike onClick={toogleLike} />
+      )}
       <PostMediaIconComment onClick={toogleCommentInput} />
     </PostMedia>
-    <PostBlockLikes>{likes.length} likes</PostBlockLikes>
+    <PostBlockLikes>{amountLikes} likes</PostBlockLikes>
     <Comments comments={comments} />
 
     {shouldShowCommentInput && (

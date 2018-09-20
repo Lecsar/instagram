@@ -7,7 +7,7 @@ const updateData = (
   updatedDataObj,
   dataForResponse
 ) => {
-  users.updateOne(searchParameterObj, { $set: updatedDataObj }, (error) => {
+  users.updateOne(searchParameterObj, { $set: updatedDataObj }, error => {
     if (error) {
       sendError(res, error);
     } else {
@@ -140,18 +140,31 @@ module.exports = (app, users) => {
     }
   );
 
-  // app.get('/test', (req, res) => {
-  //   users.find().then((findedUsers) => {
-  //     findedUsers.forEach((user) => {
-  //       user.posts.forEach(post => (post.likes = []));
+  app.post(
+    '/toogleLike',
+    (
+      { body: { profileName, postId, profileNameWhoSetLike, isSetLike } },
+      res
+    ) => {
+      users.findOne({ profileName }).then(user => {
+        const post = user.posts.find(({ id }) => id === postId);
 
-  //       users.updateOne(
-  //         { profileName: user.profileName },
-  //         { $set: { posts: user.posts } }
-  //       );
-  //     });
-  //   });
+        if (isSetLike) {
+          post.likes.push(profileNameWhoSetLike);
+        } else {
+          post.likes = post.likes.filter(
+            profileName => profileName !== profileNameWhoSetLike
+          );
+        }
 
-  //   res.sendStatus(200);
-  // });
+        updateData(
+          users,
+          res,
+          { profileName },
+          { posts: user.posts },
+          user.posts
+        );
+      });
+    }
+  );
 };

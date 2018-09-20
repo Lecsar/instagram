@@ -43,7 +43,11 @@ class News extends React.Component {
       // actions
       userActions: { onChangeSearchInput, onResetSearchInput },
       loginActions: { onLogOut },
-      newsActions: { toogleCommentInput, newsAddCommentRequest }
+      newsActions: {
+        toogleCommentInput,
+        newsAddCommentRequest,
+        newsToogleLikeRequest
+      }
     } = this.props;
 
     const header = (
@@ -60,8 +64,11 @@ class News extends React.Component {
     );
 
     const newsBlocks = news.map(
-      ({ post: { id, ...postInfo }, profilePhoto, profileName }) => {
+      ({ post: { id, likes, ...postInfo }, profilePhoto, profileName }) => {
         const shouldShowCommentInput = idOpenCommentField === id;
+        const isAuthorizedUserLikeThisPost = !!likes.find(
+          profileName => profileName === profileNameOfAuthorizedUser
+        );
 
         return (
           <Post
@@ -69,6 +76,8 @@ class News extends React.Component {
             key={id}
             id={id}
             profileNameOfAuthorizedUser={profileNameOfAuthorizedUser}
+            amountLikes={likes.length}
+            isAuthorizedUserLikeThisPost={isAuthorizedUserLikeThisPost}
             {...postInfo}
             profileName={profileName}
             profilePhoto={profilePhoto}
@@ -79,6 +88,14 @@ class News extends React.Component {
               toogleCommentInput(!(idOpenCommentField === id) && id);
             }}
             newsAddCommentRequest={newsAddCommentRequest}
+            toogleLike={() =>
+              newsToogleLikeRequest({
+                profileName,
+                postId: id,
+                profileNameWhoSetLike: profileNameOfAuthorizedUser,
+                isSetLike: !isAuthorizedUserLikeThisPost
+              })
+            }
           />
         );
       }

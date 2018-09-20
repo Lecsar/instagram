@@ -6,12 +6,15 @@ import {
   TOOGLE_COMMENT_INPUT,
   NEWS_ADD_COMMENT_REQUEST,
   NEWS_ADD_COMMENT_SUCCESS,
-  NEWS_ADD_COMMENT_ERROR
+  NEWS_ADD_COMMENT_ERROR,
+  NEWS_TOOGLE_LIKE_REQUEST,
+  NEWS_TOOGLE_LIKE_SUCCESS,
+  NEWS_TOOGLE_LIKE_ERROR
 } from '../const';
 
 /* eslint-disable no-shadow */
 
-export const getNewsRequest = profileName => (dispatch) => {
+export const getNewsRequest = profileName => dispatch => {
   dispatch({
     type: GET_NEWS_REQUEST
   });
@@ -30,7 +33,7 @@ export const toogleCommentInput = payload => ({
   payload
 });
 
-export const newsAddCommentRequest = payload => (dispatch) => {
+export const newsAddCommentRequest = payload => dispatch => {
   const { isLogin: profileName } = payload;
 
   dispatch({ type: NEWS_ADD_COMMENT_REQUEST });
@@ -42,7 +45,7 @@ export const newsAddCommentRequest = payload => (dispatch) => {
         createDataForPostRequest({ profileName })
       )
         .then(res => res.json())
-        .then((payload) => {
+        .then(payload => {
           // для показа спиннера
           setTimeout(
             () => dispatch({ type: NEWS_ADD_COMMENT_SUCCESS, payload }),
@@ -51,4 +54,23 @@ export const newsAddCommentRequest = payload => (dispatch) => {
         });
     })
     .catch(payload => dispatch({ type: NEWS_ADD_COMMENT_ERROR, payload }));
+};
+
+export const newsToogleLikeRequest = payload => dispatch => {
+  const { profileNameWhoSetLike: profileName } = payload;
+
+  dispatch({ type: NEWS_TOOGLE_LIKE_REQUEST });
+
+  fetch('http://localhost:8000/toogleLike', createDataForPostRequest(payload))
+    .then(() => {
+      fetch(
+        'http://localhost:8000/getNews',
+        createDataForPostRequest({ profileName })
+      )
+        .then(res => res.json())
+        .then(payload => {
+          dispatch({ type: NEWS_TOOGLE_LIKE_SUCCESS, payload });
+        });
+    })
+    .catch(payload => dispatch({ type: NEWS_TOOGLE_LIKE_ERROR, payload }));
 };

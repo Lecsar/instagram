@@ -13,7 +13,7 @@ const initialState = {
   showErrorMessage: false,
   loginRequest: false,
   user: '',
-  profilePhotoOfAuhorizedUser: ''
+  profilePhotoOfAuhorizedUser: 'naishuller'
 };
 
 const loginReducer = (state = initialState, action) => {

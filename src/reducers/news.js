@@ -3,12 +3,13 @@ import {
   TOOGLE_COMMENT_INPUT,
   NEWS_ADD_COMMENT_REQUEST,
   NEWS_ADD_COMMENT_SUCCESS,
-  NEWS_ADD_COMMENT_ERROR
+  NEWS_ADD_COMMENT_ERROR,
+  NEWS_TOOGLE_LIKE_SUCCESS
 } from '../const';
 
 const initialState = {
   news: [],
-  idOpenCommentField: 1,
+  idOpenCommentField: false,
   isRequestAddComment: false,
   isError: false
 };
@@ -34,6 +35,11 @@ const newsReducer = (state = initialState, action) => {
         isRequestAddComment: false,
         isError: action.payload,
         idOpenCommentField: false
+      };
+    case NEWS_TOOGLE_LIKE_SUCCESS:
+      return {
+        ...state,
+        news: action.payload
       };
     default:
       return state;
