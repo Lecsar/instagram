@@ -89,6 +89,13 @@ export const NEWS_TOOGLE_LIKE_REQUEST = 'NEWS_ADD_LIKE_REQUEST';
 export const NEWS_TOOGLE_LIKE_SUCCESS = 'NEWS_ADD_LIKE_SUCCESS';
 export const NEWS_TOOGLE_LIKE_ERROR = 'NEWS_ADD_LIKE_ERROR';
 
+export const NEWS_OPEN_ANSWER_INPUT = 'NEWS_OPEN_ANSWER_INPUT';
+
+export const NEWS_DELETE_COMMENT_REQUEST = 'NEWS_DELETE_COMMENT_REQUEST';
+export const NEWS_DELETE_COMMENT_SUCCESS = 'NEWS_DELETE_COMMENT_SUCCESS';
+export const NEWS_DELETE_COMMENT_ERROR = 'NEWS_DELETE_COMMENT_ERROR';
+
+// _______
 export const ROUTING = 'ROUTING';
 
 export const DELAY_ON_ENTER_TO_USER_PAGE = 1000;
@@ -202,39 +209,60 @@ export const createDataForPostRequest = dataForRequest => ({
   }
 });
 
-export const correctImageSize = imgLink => {
-  const MAX_WIDTH = 600;
-  const MAX_HEIGHT = 450;
-
+export const correctImageSize = (imgLink, maxWidth, maxHeight) => {
   const image = new Image();
   image.src = imgLink;
 
   const { width, height } = image;
 
-  const compressionRationWidth = width / MAX_WIDTH;
-  const compressionRationHeight = height / MAX_HEIGHT;
+  const compressionRationWidth = width / maxWidth;
+  const compressionRationHeight = height / maxHeight;
 
   if (compressionRationWidth >= compressionRationHeight) {
     const resizeHeight = Math.round(height / compressionRationWidth);
-    const paddingTop = `${(MAX_HEIGHT - resizeHeight) / 2}px`;
+    const paddingTop = `${(maxHeight - resizeHeight) / 2}px`;
     const paddingBottom = paddingTop;
 
     return {
       paddingBottom,
       paddingTop,
-      width: `${MAX_WIDTH}px`,
+      width: `${maxWidth}px`,
       height: `${resizeHeight}px`
     };
   }
 
   const resizeWidth = Math.round(width / compressionRationHeight);
-  const paddingLeft = `${(MAX_WIDTH - resizeWidth) / 2}px`;
+  const paddingLeft = `${(maxWidth - resizeWidth) / 2}px`;
   const paddingRight = paddingLeft;
 
   return {
     paddingLeft,
     paddingRight,
     width: `${resizeWidth}px`,
-    height: `${MAX_HEIGHT}px`
+    height: `${maxHeight}px`
   };
+};
+
+export const searchProfileNameOfInCommentText = text => {
+  const EMPTY_OBJECT = {};
+  const indexOfFirstLetterOfProfileName = text.indexOf('@');
+
+  if (indexOfFirstLetterOfProfileName === 0) {
+    const indexOfLastLetterOfProfileName = text.indexOf(',');
+    const cutProfileName = text.slice(
+      indexOfFirstLetterOfProfileName + 1,
+      indexOfLastLetterOfProfileName + 1
+    );
+
+    const textWithoutProfileName = text.slice(
+      indexOfLastLetterOfProfileName + 1
+    );
+
+    return {
+      cutProfileName,
+      textWithoutProfileName
+    };
+  }
+
+  return EMPTY_OBJECT;
 };

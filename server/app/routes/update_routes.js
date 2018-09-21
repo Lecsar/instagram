@@ -140,6 +140,7 @@ module.exports = (app, users) => {
     }
   );
 
+  // поставить/снять лайк
   app.post(
     '/toogleLike',
     (

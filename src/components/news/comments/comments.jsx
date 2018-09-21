@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FLEX_ROW, RESET } from '../../../const';
+import {
+  RESET,
+  FLEX_COLUMN,
+  BTN_COLOR_HEADER,
+  searchProfileNameOfInCommentText,
+  BTN_COLOR_HEADER_HOVER
+} from '../../../const';
 
 const PostBlockCommentsField = styled.section`
   padding: 0 1.5rem;
@@ -10,7 +16,7 @@ const PostBlockCommentsField = styled.section`
 `;
 
 const CommentBlock = styled.div`
-  ${FLEX_ROW};
+  ${FLEX_COLUMN};
   width: 100%;
   font-size: 1.6rem;
   margin-bottom: 0.5rem;
@@ -27,22 +33,126 @@ const CommentText = styled.p`
   ${RESET};
   width: 100%;
   text-align: justify;
+  cursor: pointer;
 `;
 
-const Comments = ({ comments }) => (
-  <PostBlockCommentsField>
-    {comments.map(({
- _id: id, profileName, text, parents = [] 
+const FieldForActions = styled.div`
+  display: none;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+
+  ${CommentText}:hover ~ & {
+    display: flex;
+  }
+
+  &:hover {
+    display: flex;
+  }
+`;
+
+const ActionSpan = styled.span`
+  padding: 0 0.7rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 600;
+  }
+`;
+
+const ActionSpanAnswer = styled(ActionSpan)`
+  color: ${BTN_COLOR_HEADER};
+
+  &:hover {
+    color: ${BTN_COLOR_HEADER_HOVER};
+  }
+`;
+
+const ActionSpanDelete = styled(ActionSpan)`
+  color: red;
+
+  &:hover {
+    color: #d50000;
+  }
+`;
+
+const LinkToCommentedUserProfileName = styled(Link)`
+  font-weight: 700;
+  color: black;
+`;
+
+const Comments = ({
+  //props
+  postId,
+  comments,
+  profileNameOfAuthorizedUser,
+  profileName,
+  //actions
+  newsOpenAnswerInput,
+  newsDeleteComment
 }) => (
-      <CommentBlock key={id} style={{ marginLeft: `${parents.length}rem` }}>
-        <CommentText>
-          <CommentProfileName to={`/profile/${profileName}`}>
-            {profileName}
-          </CommentProfileName>
-          {text}
-        </CommentText>
-      </CommentBlock>
-    ))}
+  <PostBlockCommentsField>
+    {comments.map(
+      ({ id, profileName: profileNameOfCommentedUser, text, parents = [] }) => {
+        const updatedParentsWithAddedId = [...parents];
+        updatedParentsWithAddedId.push(id);
+
+        const {
+          cutProfileName,
+          textWithoutProfileName
+        } = searchProfileNameOfInCommentText(text);
+
+        return (
+          <CommentBlock key={id} style={{ marginLeft: `${parents.length}rem` }}>
+            <CommentText>
+              <CommentProfileName to={`/profile/${profileNameOfCommentedUser}`}>
+                {profileNameOfCommentedUser}
+              </CommentProfileName>
+              {cutProfileName && (
+                <LinkToCommentedUserProfileName
+                  to={`/profile/${cutProfileName}`}
+                >
+                  {cutProfileName}
+                </LinkToCommentedUserProfileName>
+              )}
+
+              {textWithoutProfileName ? textWithoutProfileName : text}
+            </CommentText>
+            <FieldForActions>
+              <ActionSpanAnswer
+                onClick={() =>
+                  newsOpenAnswerInput({
+                    postId,
+                    profileName,
+                    parents: updatedParentsWithAddedId,
+                    idPrevComment: id
+                  })
+                }
+              >
+                Answer
+              </ActionSpanAnswer>
+              {profileNameOfAuthorizedUser === profileNameOfCommentedUser && (
+                <ActionSpanDelete
+                  onClick={() =>
+                    newsDeleteComment({
+                      profileName,
+                      postId,
+                      deletedCommentId: id,
+                      profileNameOfAuthorizedUser
+                    })
+                  }
+                >
+                  Delete
+                </ActionSpanDelete>
+              )}
+            </FieldForActions>
+          </CommentBlock>
+        );
+      }
+    )}
   </PostBlockCommentsField>
 );
 

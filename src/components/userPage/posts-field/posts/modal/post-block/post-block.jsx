@@ -42,7 +42,10 @@ const PostBlock = ({
 }) => {
   const { img = IMG_STUB_LINK, ...postInfo } = post;
 
-  const imgStyle = correctImageSize(img);
+  const MAX_WIDTH = 600;
+  const MAX_HEIGHT = 450;
+
+  const imgStyle = correctImageSize(img, MAX_WIDTH, MAX_HEIGHT);
 
   const comments = (
     <Comments

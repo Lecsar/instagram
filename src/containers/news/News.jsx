@@ -38,7 +38,14 @@ class News extends React.Component {
         // user,
         currentPage: { searchField }
       },
-      newsReducer: { news, idOpenCommentField, isRequestAddComment },
+      newsReducer: {
+        news,
+        idOpenCommentField,
+        isRequestAddComment,
+        commentInputValue,
+        idPrevComment,
+        parents
+      },
       profilePhotoOfAuhorizedUser,
       // actions
       userActions: { onChangeSearchInput, onResetSearchInput },
@@ -46,7 +53,9 @@ class News extends React.Component {
       newsActions: {
         toogleCommentInput,
         newsAddCommentRequest,
-        newsToogleLikeRequest
+        newsToogleLikeRequest,
+        newsOpenAnswerInput,
+        newsDeleteComment
       }
     } = this.props;
 
@@ -83,6 +92,9 @@ class News extends React.Component {
             profilePhoto={profilePhoto}
             shouldShowCommentInput={shouldShowCommentInput}
             isRequestAddComment={isRequestAddComment}
+            commentInputValue={commentInputValue}
+            idPrevComment={idPrevComment}
+            parents={parents}
             // actions
             toogleCommentInput={() => {
               toogleCommentInput(!(idOpenCommentField === id) && id);
@@ -96,6 +108,8 @@ class News extends React.Component {
                 isSetLike: !isAuthorizedUserLikeThisPost
               })
             }
+            newsOpenAnswerInput={newsOpenAnswerInput}
+            newsDeleteComment={newsDeleteComment}
           />
         );
       }
@@ -104,7 +118,6 @@ class News extends React.Component {
     return (
       <MainBlock>
         {header}
-
         <NewsContainer>{newsBlocks}</NewsContainer>
       </MainBlock>
     );

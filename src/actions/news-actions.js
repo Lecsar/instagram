@@ -9,7 +9,11 @@ import {
   NEWS_ADD_COMMENT_ERROR,
   NEWS_TOOGLE_LIKE_REQUEST,
   NEWS_TOOGLE_LIKE_SUCCESS,
-  NEWS_TOOGLE_LIKE_ERROR
+  NEWS_TOOGLE_LIKE_ERROR,
+  NEWS_OPEN_ANSWER_INPUT,
+  NEWS_DELETE_COMMENT_REQUEST,
+  NEWS_DELETE_COMMENT_SUCCESS,
+  NEWS_DELETE_COMMENT_ERROR
 } from '../const';
 
 /* eslint-disable no-shadow */
@@ -73,4 +77,32 @@ export const newsToogleLikeRequest = payload => dispatch => {
         });
     })
     .catch(payload => dispatch({ type: NEWS_TOOGLE_LIKE_ERROR, payload }));
+};
+
+export const newsOpenAnswerInput = payload => ({
+  type: NEWS_OPEN_ANSWER_INPUT,
+  payload
+});
+
+export const newsDeleteComment = ({
+  profileNameOfAuthorizedUser: profileName,
+  ...dataForRequest
+}) => dispatch => {
+  dispatch({ type: NEWS_DELETE_COMMENT_REQUEST });
+
+  fetch(
+    'http://localhost:8000/deleteComment',
+    createDataForPostRequest(dataForRequest)
+  )
+    .then(() => {
+      fetch(
+        'http://localhost:8000/getNews',
+        createDataForPostRequest({ profileName })
+      )
+        .then(res => res.json())
+        .then(payload => {
+          dispatch({ type: NEWS_DELETE_COMMENT_SUCCESS, payload });
+        });
+    })
+    .catch(payload => dispatch({ type: NEWS_DELETE_COMMENT_ERROR, payload }));
 };

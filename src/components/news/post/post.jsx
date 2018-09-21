@@ -8,7 +8,8 @@ import {
   BORDER_COLOR,
   FLEX_ROW_CENTER,
   IMG_STUB_LINK,
-  SpinnerStyle
+  SpinnerStyle,
+  correctImageSize
 } from '../../../const';
 import Comments from '../comments/comments';
 import CommentInput from '../comment-input/commentInput';
@@ -56,6 +57,7 @@ const PostBlockTopPlace = styled.h3`
 const PostBlockImage = styled.img`
   max-width: 100%;
   max-height: 40rem;
+  cursor: pointer;
 `;
 
 const PostMedia = styled.div`
@@ -120,49 +122,76 @@ const Post = ({
   profileNameOfAuthorizedUser,
   isAuthorizedUserLikeThisPost,
   isRequestAddComment,
+  commentInputValue,
+  idPrevComment,
+  parents,
   // actions
   toogleCommentInput,
   newsAddCommentRequest,
-  toogleLike
-}) => (
-  <PostBlock>
-    <PostBlockTop>
-      <Link to={`profile/${profileName}`}>
-        <PostBlockTopImg src={profilePhoto} alt="profileNamePhoto" />
-      </Link>
-      <PostBlockTopGroup>
-        <PostBlockTopProfileName to={`profile/${profileName}`}>
-          {profileName}
-        </PostBlockTopProfileName>
-        <PostBlockTopPlace>• {place}</PostBlockTopPlace>
-      </PostBlockTopGroup>
-    </PostBlockTop>
-    <PostBlockImage src={img} alt="postImage" />
-    <PostMedia>
-      {isAuthorizedUserLikeThisPost ? (
-        <PostMediaIconRedLike onClick={toogleLike} />
-      ) : (
-        <PostMediaIconLike onClick={toogleLike} />
-      )}
-      <PostMediaIconComment onClick={toogleCommentInput} />
-    </PostMedia>
-    <PostBlockLikes>{amountLikes} likes</PostBlockLikes>
-    <Comments comments={comments} />
+  toogleLike,
+  newsOpenAnswerInput,
+  newsDeleteComment
+}) => {
+  const imgStyle = correctImageSize(img, 600, 400);
+  const likeIcon = isAuthorizedUserLikeThisPost ? (
+    <PostMediaIconRedLike onClick={toogleLike} />
+  ) : (
+    <PostMediaIconLike onClick={toogleLike} />
+  );
 
-    {shouldShowCommentInput && (
-      <FieldForInput>
-        <CommentInput
-          postId={id}
-          profileName={profileName}
-          isLogin={profileNameOfAuthorizedUser}
-          // actions
-          closeInput={toogleCommentInput}
-          newsAddCommentRequest={newsAddCommentRequest}
-        />
-        {isRequestAddComment && <SpinnerForAddComment />}
-      </FieldForInput>
-    )}
-  </PostBlock>
-);
+  return (
+    <PostBlock>
+      <PostBlockTop>
+        <Link to={`profile/${profileName}`}>
+          <PostBlockTopImg src={profilePhoto} alt="profileNamePhoto" />
+        </Link>
+        <PostBlockTopGroup>
+          <PostBlockTopProfileName to={`profile/${profileName}`}>
+            {profileName}
+          </PostBlockTopProfileName>
+          <PostBlockTopPlace>• {place}</PostBlockTopPlace>
+        </PostBlockTopGroup>
+      </PostBlockTop>
+      <PostBlockImage
+        style={imgStyle}
+        onDoubleClick={toogleLike}
+        src={img}
+        alt="postImage"
+      />
+      <PostMedia>
+        {likeIcon}
+        <PostMediaIconComment onClick={toogleCommentInput} />
+      </PostMedia>
+      <PostBlockLikes>{amountLikes} likes</PostBlockLikes>
+      <Comments
+        // props
+        postId={id}
+        comments={comments}
+        profileNameOfAuthorizedUser={profileNameOfAuthorizedUser}
+        profileName={profileName}
+        // actions
+        newsOpenAnswerInput={newsOpenAnswerInput}
+        newsDeleteComment={newsDeleteComment}
+      />
+
+      {shouldShowCommentInput && (
+        <FieldForInput>
+          <CommentInput
+            postId={id}
+            profileName={profileName}
+            isLogin={profileNameOfAuthorizedUser}
+            commentInputValue={commentInputValue}
+            idPrevComment={idPrevComment}
+            parents={parents}
+            // actions
+            closeInput={toogleCommentInput}
+            newsAddCommentRequest={newsAddCommentRequest}
+          />
+          {isRequestAddComment && <SpinnerForAddComment />}
+        </FieldForInput>
+      )}
+    </PostBlock>
+  );
+};
 
 export default Post;

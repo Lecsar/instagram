@@ -37,7 +37,22 @@ class CommentInput extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.commentInputValue) {
+      this.input.value = `@${this.props.commentInputValue}, `;
+    }
     this.input.focus();
+  }
+
+  componentDidUpdate({ commentInputValue }) {
+    // при выборе другого пользователя, которому нужно ответить,
+    // чтобы сохранить фокус
+    if (commentInputValue !== this.props.commentInputValue) {
+      // если это ответ на комментарий, а не просто комментарий
+      if (this.props.commentInputValue) {
+        this.input.value = `@${this.props.commentInputValue}, `;
+      }
+      this.input.focus();
+    }
   }
 
   keyDownActions(keyCode, text) {
@@ -46,6 +61,8 @@ class CommentInput extends React.Component {
       postId,
       profileName,
       isLogin,
+      idPrevComment,
+      parents,
       // actions
       closeInput,
       newsAddCommentRequest
@@ -61,7 +78,9 @@ class CommentInput extends React.Component {
         text,
         idOfComment: createID(),
         isLogin: isLogin || 'naishuller',
-        profileName
+        profileName,
+        idPrevComment,
+        parents
       });
     }
   }
@@ -72,7 +91,8 @@ class CommentInput extends React.Component {
         type="text"
         placeholder="Comment..."
         innerRef={input => (this.input = input)}
-        onKeyDown={({ keyCode, target: { value } }) => this.keyDownActions(keyCode, value)
+        onKeyDown={({ keyCode, target: { value } }) =>
+          this.keyDownActions(keyCode, value)
         }
       />
     );
